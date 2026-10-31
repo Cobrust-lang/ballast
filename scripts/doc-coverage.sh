@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# scripts/doc-coverage.sh — ADSD repo doc-coverage gate
+# scripts/doc-coverage.sh — Ballast repo doc-coverage gate
 #
-# Enforces ADSD §3 documentation mandate on this repo itself:
+# Enforces Ballast §3 documentation mandate on this repo itself:
 # - Every docs/human/zh/*.md has a parallel docs/human/en/*.md (and vice versa)
 # - Parallel files have matching filenames
-# - Reference files in plugins/adsd/skills/agent-driven-development/reference/
+# - Reference files in plugins/ballast/skills/ballast/reference/
 #   have YAML frontmatter
 #
 # Exits non-zero on coverage failure. Pre-commit hook + CI both should run this.
@@ -26,7 +26,7 @@ fi
 
 errors=0
 
-echo "ADSD doc-coverage gate"
+echo "Ballast doc-coverage gate"
 echo "----------------------"
 
 # ----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ fi
 echo ""
 echo "[Inv 2] Reference file frontmatter"
 
-ref_dir="plugins/adsd/skills/agent-driven-development/reference"
+ref_dir="plugins/ballast/skills/ballast/reference"
 if [ -d "$ref_dir" ]; then
   for f in "$ref_dir"/*.md; do
     [ -f "$f" ] || continue

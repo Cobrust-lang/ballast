@@ -1,6 +1,6 @@
-# Contributing to ADSD
+# Contributing to Ballast
 
-ADSD evolves the same way it teaches you to evolve your project: ADRs,
+Ballast evolves the same way it teaches you to evolve your project: ADRs,
 findings, atomic commits, doc-coverage on the same change.
 
 ## What kinds of contributions are most welcome
@@ -32,7 +32,7 @@ findings, atomic commits, doc-coverage on the same change.
    shape.
 4. **For case studies**: use day-by-day or week-by-week structure. Mark
    counterfactuals (`What would have failed without this discipline:`).
-5. **Apply ADSD to your contribution**:
+5. **Apply Ballast to your contribution**:
    - If the change affects ≥ 2 files in non-trivial ways, write a short
      ADR (`docs/adr/NNNN-<slug>.md`) in this repo describing the
      rationale.
@@ -55,7 +55,7 @@ If you are an AI agent contributing under human direction:
   in commit `Co-Authored-By:` lines.
 - Reserve `review-claude` for external third-party audit roles only.
 
-This convention is itself an ADSD failure-mode prevention (F21 — cross-
+This convention is itself a Ballast failure-mode prevention (F21 — cross-
 session AI agent identity overload).
 
 ## Code of conduct
@@ -64,5 +64,5 @@ Be empirical. Be specific. Be brief. Don't accuse. Don't apologize.
 Cite the commit / file / instance. Write so a smart engineer two years
 from now can pick up your contribution cold.
 
-The same affect ADSD teaches for findings — "this surprised us, here's
+The same affect Ballast teaches for findings — "this surprised us, here's
 what we learned" — applies to interactions in this repo.

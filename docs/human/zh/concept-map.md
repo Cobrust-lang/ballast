@@ -1,10 +1,10 @@
-# ADSD 概念图
+# Ballast（压舱石）概念图
 
-> 用 mermaid 图表 + 简短文字, 把 ADSD 全套概念一图打散.
+> 用 mermaid 图表 + 简短文字, 把 Ballast 全套概念一图打散.
 >
 > 这是"各部件怎么拼起来"的文档. 它是实战检验过的, 不是教条 —
-> 当你的项目形态需要时就大胆调整 (见 SKILL.md §"When to bend ADSD").
-> 这里每个量化声明都引用磁盘上真实的来源; ADSD 对自己的文档也照样
+> 当你的项目形态需要时就大胆调整 (见 SKILL.md §"When to bend Ballast").
+> 这里每个量化声明都引用磁盘上真实的来源; Ballast 对自己的文档也照样
 > dogfood 它自己 §4 的 benchmark-cite 纪律.
 
 ## 顶层视图
@@ -37,7 +37,7 @@ flowchart TB
     Fix --> ReleaseReady
 ```
 
-相对早期 ADSD, 这张图里固化了两处结构性转变, 下文展开: **每次作者派活都配
+相对早期 Ballast, 这张图里固化了两处结构性转变, 下文展开: **每次作者派活都配
 一个 merge 前的独立 audit** (方法论 Delta 3), 以及 **每个 sub-agent —
 作者和 audit 都用顶配模型 tier** (Delta 1, 它把旧的"机械活用 sonnet"分支
 退役了). 8 条方法论 deltas 在
@@ -45,7 +45,7 @@ flowchart TB
 
 ## 角色拓扑 (5 层 + 外部 review)
 
-ADSD 把工作映射到 **5 层角色等级 + 一条外部 review 轨道**. 层级映射的是
+Ballast 把工作映射到 **5 层角色等级 + 一条外部 review 轨道**. 层级映射的是
 模型大小 + autonomy 预算, 不是人. 每个项目恰好一个 CTO (故意设的瓶颈);
 review 可以是复数.
 
@@ -232,7 +232,7 @@ flowchart LR
 - **战术层**: ADR + Finding 每周新增, milestone 检查点, audit-team 设计.
 - **执行层**: 每日 sprint, 作者 + 独立 audit 派活, gate 通过, atomic commit.
 
-## 方法论 deltas — ADSD 怎么精化*自己*
+## 方法论 deltas — Ballast 怎么精化*自己*
 
 Findings 说"系统做错了 X". **方法论 deltas** 说"我们*运行*多 agent 流程的方式应该变".
 Cobrust v0.6.0 → v0.7.0 run 期间积累了 8 条 delta, 每条都是经验逼出来的:

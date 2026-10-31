@@ -1,6 +1,6 @@
 ---
-name: ADSD repo conventions
-description: Meta-conventions for this repo itself. ADSD codifies how to manage AI-agent projects; this file applies ADSD discipline to the ADSD methodology itself. Agents contributing to this repo should read this first. Covers repo layout, the artifact frontmatter schemas (ADR / finding / snapshot incl. schema_invariant + the per-batch catalogue schemas), the conventional-commit + scope-tag + Co-Authored-By discipline, the F44-F70 disciplines that became conventions (lockfile-staging, chain-generality-verification, honest-signal), and the dynamic-Workflow-script authoring convention (retry-wrap agents; agents write-but-don't-commit; CTO commits after independent audit).
+name: Ballast repo conventions
+description: Meta-conventions for this repo itself. Ballast codifies how to manage AI-agent projects; this file applies Ballast discipline to the Ballast methodology itself. Agents contributing to this repo should read this first. Covers repo layout, the artifact frontmatter schemas (ADR / finding / snapshot incl. schema_invariant + the per-batch catalogue schemas), the conventional-commit + scope-tag + Co-Authored-By discipline, the F44-F70 disciplines that became conventions (lockfile-staging, chain-generality-verification, honest-signal), and the dynamic-Workflow-script authoring convention (retry-wrap agents; agents write-but-don't-commit; CTO commits after independent audit).
 type: convention
 version: 1.1.0
 date: 2026-05-29
@@ -8,9 +8,9 @@ status: active
 relates_to: [SKILL.md §"Documentation Discipline", reference:EVOLUTION.md, reference:cobrust-f44-f70/methodology-deltas.md, README.md §Contributing, CONTRIBUTING.md]
 ---
 
-# ADSD repo conventions
+# Ballast repo conventions
 
-> ADSD is a methodology for managing AI-agent software projects. This repo IS such a project. Therefore, **ADSD applies to ADSD**. This file captures the meta-conventions specific to this repo's contributors (humans and AI agents).
+> Ballast is a methodology for managing AI-agent software projects. This repo IS such a project. Therefore, **Ballast applies to Ballast**. This file captures the meta-conventions specific to this repo's contributors (humans and AI agents).
 >
 > These conventions are themselves **battle-tested, not orthodoxy**: most of them
 > are F-family failure modes (see `reference/failure-modes-catalogue.md` + the
@@ -23,12 +23,12 @@ relates_to: [SKILL.md §"Documentation Discipline", reference:EVOLUTION.md, refe
 ## Repo structure (binding)
 
 ```
-agent-driven-development/
+ballast/
 ├── .claude-plugin/marketplace.json     # Plugin marketplace catalog
 ├── plugins/
-│   └── adsd/
+│   └── ballast/
 │       └── skills/
-│           └── agent-driven-development/   # The skill — auto-loaded by Claude Code
+│           └── ballast/   # The skill — auto-loaded by Claude Code
 │               ├── SKILL.md                # Main methodology (~50 KB, ~1015 lines)
 │               ├── reference/              # Deep-dive references
 │               │   ├── failure-modes-catalogue.md   # F1-F30 (~129 KB)
@@ -45,10 +45,10 @@ agent-driven-development/
 │   │   └── en/                             # English user docs — 1:1 parity with zh
 │   └── agent/
 │       ├── conventions.md                  # This file
-│       ├── adr/                            # Meta-ADRs for ADSD itself (reserved; schema below)
-│       └── findings/                       # Findings about ADSD's evolution (reserved; schema below)
+│       ├── adr/                            # Meta-ADRs for Ballast itself (reserved; schema below)
+│       └── findings/                       # Findings about Ballast's evolution (reserved; schema below)
 ├── scripts/
-│   └── doc-coverage.sh                     # Enforces zh+en parity per ADSD §3 mandate
+│   └── doc-coverage.sh                     # Enforces zh+en parity per Ballast §3 mandate
 ├── CONTRIBUTING.md                         # Human-facing contribution guide
 ├── LICENSE-APACHE / LICENSE-MIT
 └── README.md                               # Entry point
@@ -57,7 +57,7 @@ agent-driven-development/
 **Binding constraints**:
 
 1. Every file in `docs/human/zh/` MUST have a parallel file at `docs/human/en/` with the same filename. Enforced by `scripts/doc-coverage.sh`.
-2. Every reference under `plugins/adsd/skills/agent-driven-development/reference/` MUST have YAML frontmatter (`name`, `description`, `type`, `version`, `date`, `status`, `relates_to`).
+2. Every reference under `plugins/ballast/skills/ballast/reference/` MUST have YAML frontmatter (`name`, `description`, `type`, `version`, `date`, `status`, `relates_to`).
 3. The SKILL.md `description` field is the auto-activation trigger — keep it keyword-dense and specific.
 4. ADRs in `docs/agent/adr/` are zero-padded sequential (`0001-*.md`, `0002-*.md`, ...). Once accepted, an ADR is immutable; supersede via a new ADR.
 
@@ -70,7 +70,7 @@ what makes a doc falsifiable: a returning agent can `git log` the SHA and decide
 whether the doc is current or stale. This is the SKILL.md §"Last verified commit"
 discipline, dogfooded.
 
-### Reference files (in `plugins/adsd/skills/agent-driven-development/reference/`)
+### Reference files (in `plugins/ballast/skills/ballast/reference/`)
 
 ```yaml
 ---
@@ -187,7 +187,7 @@ is unambiguous. A future normalization pass could unify the `catalogue_id` /
 `finding_id` keys; per the F1 honest-signal rule it is *recorded* as known
 divergence, not silently reconciled.
 
-## Bilingual docs mandate (ADSD §3 dogfood)
+## Bilingual docs mandate (Ballast §3 dogfood)
 
 The skill's SKILL.md §3 mandates that every public item gets entries in:
 
@@ -195,7 +195,7 @@ The skill's SKILL.md §3 mandates that every public item gets entries in:
 - `docs/human/en/<topic>.md` (1:1 parity)
 - Agent-facing schema (in this repo: SKILL.md + reference/)
 
-This rule applies to ADSD itself. `scripts/doc-coverage.sh` enforces zh+en parity.
+This rule applies to Ballast itself. `scripts/doc-coverage.sh` enforces zh+en parity.
 
 **Operative checks** (run by `doc-coverage.sh`):
 
@@ -212,11 +212,11 @@ CI fails if any check fails.
 |---|---|---|
 | New methodology rule | `docs/agent/adr/NNNN-<slug>.md` | The rule affects ≥2 reference files, templates, or SKILL.md sections |
 | Refine existing reference | edit the reference file directly + note in commit | Single-file refinement |
-| Document an ADSD evolution event | `docs/agent/findings/<slug>.md` | Real-world ADSD use surfaced a gap or worked unexpectedly well |
+| Document a Ballast evolution event | `docs/agent/findings/<slug>.md` | Real-world Ballast use surfaced a gap or worked unexpectedly well |
 | Update SKILL.md | edit SKILL.md + cross-reference an ADR if it's a binding rule | Adds a new "Part N" or modifies an existing one |
 | New cross-pollination ref (Anthropic / OpenAI / other) | `plugins/.../reference/<slug>.md` | New industry pattern worth adopting |
 | Per-era empirical corroboration of failure modes | `plugins/.../reference/cobrust-<range>/F<NN>-<slug>.md` + batch `README.md` | A downstream project hit a catalogue pattern (or a new one) with citable SHAs |
-| Refinement to ADSD's own dispatch/audit process | `plugins/.../reference/cobrust-<range>/methodology-deltas.md` | "Change how we *run* the process" (NOT "the system did X wrong" — that's a finding) + record the empirical trigger + how to apply |
+| Refinement to Ballast's own dispatch/audit process | `plugins/.../reference/cobrust-<range>/methodology-deltas.md` | "Change how we *run* the process" (NOT "the system did X wrong" — that's a finding) + record the empirical trigger + how to apply |
 
 ## When NOT to add an ADR
 
@@ -226,7 +226,7 @@ CI fails if any check fails.
 - Re-organizing within a single file
 - Translation update (zh ⟵→ en sync)
 
-Per ADSD §"ADR vs Finding distinction": ADRs are forward-looking decisions; small refinements don't need them.
+Per Ballast §"ADR vs Finding distinction": ADRs are forward-looking decisions; small refinements don't need them.
 
 ## Commit message format
 
@@ -283,8 +283,8 @@ the current model.)
 
 Per F21 codification (cross-session identity overload):
 
-- Do NOT sign as bare "review-claude" or "ADSD-author" in commits or files
-- Use session-stamped attribution: `review-claude (session 4bb35f43)` or `ADSD-author (session XYZ)`
+- Do NOT sign as bare "review-claude" or "Ballast-author" in commits or files
+- Use session-stamped attribution: `review-claude (session 4bb35f43)` or `Ballast-author (session XYZ)`
 - Reserve plain handles for the abstract role in narrative prose only
 
 Per F49 (fresh-workspace identity fallback leak — Cobrust SHA `6491614`, leak
@@ -441,6 +441,6 @@ Semver bumps follow SemVer 2.0:
 - `reference/EVOLUTION.md` — the methodology's growth arc (F1-F30 → F31-F40 → F41-F43 → F44-F70 + 8 deltas); read this to see "what changed since I last read"
 - `reference/cobrust-f44-f70/methodology-deltas.md` — the 8 dispatch/audit deltas, several of which became the pre-commit conventions above
 - `CONTRIBUTING.md` — human-facing contribution flow
-- `plugins/adsd/skills/agent-driven-development/SKILL.md` §"Documentation Discipline" — methodology origin of these rules
-- `plugins/adsd/skills/agent-driven-development/reference/failure-modes-catalogue.md` F1 family + F19 + F20 + F21 — the failure modes these conventions prevent; F31-F70 live in the per-batch dirs alongside it
+- `plugins/ballast/skills/ballast/SKILL.md` §"Documentation Discipline" — methodology origin of these rules
+- `plugins/ballast/skills/ballast/reference/failure-modes-catalogue.md` F1 family + F19 + F20 + F21 — the failure modes these conventions prevent; F31-F70 live in the per-batch dirs alongside it
 - `scripts/doc-coverage.sh` — machine enforcement of zh+en parity

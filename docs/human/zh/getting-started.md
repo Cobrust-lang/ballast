@@ -1,6 +1,6 @@
 # 入门指南
 
-> **目标**: 30 分钟内让一个不熟悉 ADSD 的工程师在自己项目里开始用 ADRs + findings + sub-agent 派活的规范.
+> **目标**: 30 分钟内让一个不熟悉 Ballast（压舱石）的工程师在自己项目里开始用 ADRs + findings + sub-agent 派活的规范.
 
 ## 谁该读这份文档
 
@@ -9,17 +9,17 @@
 - 你已经会用 Claude Code / Cursor / 类似 IDE-agent 工具的基本操作
 - 你有一个 git 项目可以套这套方法论
 
-如果你只是写一个单 agent 的小脚本, ADSD 是 overkill, 跳过.
+如果你只是写一个单 agent 的小脚本, Ballast 是 overkill, 跳过.
 
 ## 30 秒概览
 
-ADSD 是从 Cobrust 项目提炼的**多 agent 工作纪律**. 提炼快照是一段 12 天密集开发实战 (2026-04-30 → 2026-05-12, ~278 commits); 项目随后远不止于此, 持续推进, 目录也随之增长 — 从最初的 F1–F30 扩到 F1–F70, 跨三个后续佐证批次. ADSD 把以下三件事做硬:
+Ballast（压舱石）是从 Cobrust 项目提炼的**多 agent 工作纪律**. Agent 负责写, 压舱石负责别翻. 它是 agent-driven development 的一种做法, 不是这个品类的名字, 也不是框架. 以前叫 ADSD. 提炼快照是一段 12 天密集开发实战 (2026-04-30 → 2026-05-12, ~278 commits); 项目随后远不止于此, 持续推进, 目录也随之增长 — 从最初的 F1–F30 扩到 F1–F70, 跨三个后续佐证批次. Ballast 把以下三件事做硬:
 
 1. **决策捕获** — 每个跨文件的决定都写 ADR (Architecture Decision Record)
 2. **失败捕获** — 每次"翻车 / 意外 / 死胡同"都写 Finding (负向结果)
 3. **派活有谱** — 难度自评 + 全部用顶配模型派 sub-agent + 强制独立的 post-author 审计
 
-加上**双语文档强制** + **wave + Tx 原子提交** + **F1–F70 反模式目录** (奠基的 F1–F30 + 三个佐证批次) + **8 条 methodology delta** + **release-readiness 上线前独立验证**, 就是 ADSD 全貌.
+加上**双语文档强制** + **wave + Tx 原子提交** + **F1–F70 反模式目录** (奠基的 F1–F30 + 三个佐证批次) + **8 条 methodology delta** + **release-readiness 上线前独立验证**, 就是 Ballast 全貌.
 
 详细架构: [`concept-map.md`](./concept-map.md)
 
@@ -28,28 +28,28 @@ ADSD 是从 Cobrust 项目提炼的**多 agent 工作纪律**. 提炼快照是�
 ### 方式 1 (推荐) — Claude Code plugin
 
 ```
-/plugin marketplace add Cobrust-lang/agent-driven-development
-/plugin install adsd@adsd
+/plugin marketplace add Cobrust-lang/ballast
+/plugin install ballast@ballast
 ```
 
-装完后, 命中"multi-agent dispatch / ADR drafting / F1-F70 failure mode"等关键词时, Claude 会自动激活 ADSD skill.
+装完后, 命中"multi-agent dispatch / ADR drafting / F1-F70 failure mode"等关键词时, Claude 会自动激活 Ballast skill.
 
 ### 方式 2 — 个人 skill 目录 (回退方案)
 
 ```sh
 mkdir -p ~/.claude/skills
-git clone --depth 1 https://github.com/Cobrust-lang/agent-driven-development.git /tmp/adsd-src
-cp -r /tmp/adsd-src/plugins/adsd/skills/agent-driven-development ~/.claude/skills/
-rm -rf /tmp/adsd-src
+git clone --depth 1 https://github.com/Cobrust-lang/ballast.git /tmp/ballast-src
+cp -r /tmp/ballast-src/plugins/ballast/skills/ballast ~/.claude/skills/
+rm -rf /tmp/ballast-src
 ```
 
 ### 方式 3 — 只读 (不装, 看 markdown)
 
-直接读 [`plugins/adsd/skills/agent-driven-development/SKILL.md`](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/SKILL.md), 30 分钟读完核心方法论. 不装也能学.
+直接读 [`plugins/ballast/skills/ballast/SKILL.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/SKILL.md), 30 分钟读完核心方法论. 不装也能学.
 
 ## 第一次实战 — 5 步落地
 
-假设你有一个项目 `~/my-project/`, 想开始用 ADSD.
+假设你有一个项目 `~/my-project/`, 想开始用 Ballast.
 
 ### 步骤 1: 创建项目 `CLAUDE.md` (宪法)
 
@@ -61,7 +61,7 @@ rm -rf /tmp/adsd-src
 - **工程标准** — Elegant / Scientific / Efficient 各 3-5 条具体规定
 - **里程碑表** — M0 (脚手架) → M1 → ... 现在 + 未来 6-12 个月
 
-参考: ADSD 自己的 SKILL.md "Engineering standards" 段是模板.
+参考: Ballast 自己的 SKILL.md "Engineering standards" 段是模板.
 
 ### 步骤 2: 创建 `docs/agent/` + `docs/human/{zh,en}/` 目录骨架
 
@@ -71,7 +71,7 @@ mkdir -p docs/agent/adr docs/agent/findings docs/agent/modules
 mkdir -p docs/human/zh docs/human/en
 ```
 
-把 ADSD 的 `templates/adr-template.md` 复制到 `docs/agent/adr/_template.md` 作为 ADR 起草模板. 同理 finding-template, snapshot-template.
+把 Ballast 的 `templates/adr-template.md` 复制到 `docs/agent/adr/_template.md` 作为 ADR 起草模板. 同理 finding-template, snapshot-template.
 
 ### 步骤 3: 写 ADR-0001 (license 选择)
 
@@ -83,11 +83,11 @@ mkdir -p docs/human/zh docs/human/en
 
 ```
 - [Project identity preamble](identity.md) — read first when resuming a session
-- [Subagent dispatch rule](subagent_dispatch.md) — all-top-tier per ADSD Delta 1
+- [Subagent dispatch rule](subagent_dispatch.md) — all-top-tier per Ballast Delta 1
 - [CTO operations runbook](runbook.md) — dispatch + audit SOPs
 ```
 
-详见 [`reference/cross-session-memory-architecture.md`](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cross-session-memory-architecture.md).
+详见 [`reference/cross-session-memory-architecture.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cross-session-memory-architecture.md).
 
 ### 步骤 5: 第一次 sub-agent 派活 (难度自评 + 顶配模型)
 
@@ -108,18 +108,18 @@ REQUIRED READS:
 REPORT FORMAT: [P7-COMPLETION] with verification block (paste raw cargo test output, no paraphrase)
 ```
 
-> **关于模型档位.** 老版 ADSD 用 D0–D5 矩阵把"简单 / 机械"的任务路由到更便宜的模型.
-> 那套档位矩阵已经按 [methodology Delta 1](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md)
+> **关于模型档位.** 老版 Ballast 用 D0–D5 矩阵把"简单 / 机械"的任务路由到更便宜的模型.
+> 那套档位矩阵已经按 [methodology Delta 1](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md)
 > **废弃**: 每个派出去的 sub-agent — 作者 *和* 审计 — 都用顶配模型. 难度自评依然重要
 > (它决定 scope、required reads、以及审计该看得多狠), 但它不再用来选更便宜的档位. 唯一的例外
 > *不是* 档位选择 — 是那种真正机械的改动 (1–2 行 typo、盖个 SHA), 编排 lead 直接做掉即可, 根本
-> 不用派 sub-agent ([Delta 2](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md), dispatcher-as-context-custodian).
+> 不用派 sub-agent ([Delta 2](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md), dispatcher-as-context-custodian).
 
-详见 [`reference/prompt-engineering-patterns.md`](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/prompt-engineering-patterns.md).
+详见 [`reference/prompt-engineering-patterns.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/prompt-engineering-patterns.md).
 
-## 你的第一个 ADSD sprint — 完整走一遍
+## 你的第一个 Ballast sprint — 完整走一遍
 
-上面 5 步搭好了脚手架. 这一节用一个具体 sprint 把 **ADSD 核心循环端到端**走一遍,
+上面 5 步搭好了脚手架. 这一节用一个具体 sprint 把 **Ballast 核心循环端到端**走一遍,
 让你看清各部件怎么咬合: **two-phase dispatch → 实现 → 独立审计 → 合并.**
 
 场景: 你的项目要加一个 `parse_duration("1h30m") -> Result<Seconds>` 函数. 它是跨文件的
@@ -162,7 +162,7 @@ Decision + 为什么、以及 **Done means** (比如 "`tests/duration_corpus.rs`
 分支名、最终 SHA、和 **原始** gate 输出 (不许转述 — 转述 gate 结论本身就是个有记录的失败模式).
 
 **审计这一步 — 不可省, 而且必须是*不同的* agent.** 合并前, 派一个**独立、只读**的审计去查那条
-分支 ([methodology Delta 3](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md)).
+分支 ([methodology Delta 3](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md)).
 作者自审 — 或者你这个 framing 了这份活的人自审 — 在结构上不够: 两边的 context 都偏向"这事儿
 做完了". 审计用 **GO / GO-WITH-FINDINGS / BLOCK** 这套词汇给结论; 合并前把 findings 都处理掉.
 有一件事要让审计明确去查: **fixture-name-vs-behavior gate** — 一个叫 `rejects_garbage` 的测试
@@ -171,7 +171,7 @@ Decision + 为什么、以及 **Done means** (比如 "`tests/duration_corpus.rs`
 **合并.** 只有在 cold rebuild + 5-gate 全绿之后才 `merge --no-ff`. 这个 commit 是原子的:
 代码 + 测试 + zh/en 文档 + ADR 一起落地.
 
-这就是整个循环. ADSD 里其他所有东西 — persona、deep-source-read、战略评审 — 都是这个循环
+这就是整个循环. Ballast 里其他所有东西 — persona、deep-source-read、战略评审 — 都是这个循环
 在更高 stakes 下加更多 lens.
 
 ## 同时跑多个 sprint
@@ -189,10 +189,10 @@ Decision + 为什么、以及 **Done means** (比如 "`tests/duration_corpus.rs`
 ### 什么时候升级到 dynamic-Workflow 编排
 
 手工管 4 路并行派活, 正是 lead 容易掉球的地方 — 过期的 snapshot、一个还在 poll 仍在跑的作者的
-审计、漏掉的 pre-flight 检查. ADSD 最新的选项把这个循环编码成代码: 一个**确定性的 dynamic
+审计、漏掉的 pre-flight 检查. Ballast 最新的选项把这个循环编码成代码: 一个**确定性的 dynamic
 Workflow** (一段 Claude Code 编排脚本), 把 **fan-out → synthesis → impl → 独立审计**
 作为固定 stage 跑, 而不是手工管
-([methodology Delta 8](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md)).
+([methodology Delta 8](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md)).
 
 把它当成一个**实验臂**, 而不是定论. 它去掉了 lead 手忙脚乱的失败面, 但引入了新的: 固定 topology
 没法像人那样在 run 中途 re-scope, 而且编排脚本本身是*未经审计的*代码 (所以它也受同一条独立审计规则
@@ -206,19 +206,19 @@ Workflow** (一段 Claude Code 编排脚本), 把 **fan-out → synthesis → im
 
 ```sh
 # 1. 验证 plugin 已激活
-/plugin status adsd
+/plugin status ballast
 
-# 2. 在 Claude Code 里问个问题, 含 ADSD 关键词
+# 2. 在 Claude Code 里问个问题, 含 Ballast 关键词
 "我需要 plan 一个带独立 post-author 审计的 multi-agent dispatch — two-phase SOP 是什么?"
 ```
 
-如果 Claude 自动引到 ADSD 的 reference, 装对了. 如果 Claude 用通用知识回答, skill 没激活.
+如果 Claude 自动引到 Ballast 的 reference, 装对了. 如果 Claude 用通用知识回答, skill 没激活.
 
 ## 下一步
 
-- 读 [`concept-map.md`](./concept-map.md) 看 ADSD 完整概念图
-- 撞坑了写 finding, 不要藏起来. 奠基的 F1–F30 catalogue 在 [`reference/failure-modes-catalogue.md`](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/failure-modes-catalogue.md), F31–F70 佐证批次就在它旁边的 [`reference/`](https://github.com/Cobrust-lang/agent-driven-development/tree/main/plugins/adsd/skills/agent-driven-development/reference) 下; 你可能撞上同一个
-- 在选 dispatch/audit topology? 读 [`reference/cobrust-f44-f70/methodology-deltas.md`](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md) 看 8 条 delta (全部顶配派活、强制审计、dynamic-Workflow 模式, …)
+- 读 [`concept-map.md`](./concept-map.md) 看 Ballast 完整概念图
+- 撞坑了写 finding, 不要藏起来. 奠基的 F1–F30 catalogue 在 [`reference/failure-modes-catalogue.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/failure-modes-catalogue.md), F31–F70 佐证批次就在它旁边的 [`reference/`](https://github.com/Cobrust-lang/ballast/tree/main/plugins/ballast/skills/ballast/reference) 下; 你可能撞上同一个
+- 在选 dispatch/audit topology? 读 [`reference/cobrust-f44-f70/methodology-deltas.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md) 看 8 条 delta (全部顶配派活、强制审计、dynamic-Workflow 模式, …)
 
 ## 常见问题
 
@@ -226,13 +226,13 @@ Workflow** (一段 Claude Code 编排脚本), 把 **fan-out → synthesis → im
 A: 跨 ≥2 文件的决定才写. 单文件修改不写. 修 bug 不写 (但写 finding).
 
 **Q: zh + en 双语文档负担太重?**
-A: ADSD 强制是因为它解决了"中国团队天然 multi-lingual"的真实问题. 单语项目可以放宽, 但 README + getting-started 双语建议保持.
+A: Ballast 强制是因为它解决了"中国团队天然 multi-lingual"的真实问题. 单语项目可以放宽, 但 README + getting-started 双语建议保持.
 
 **Q: 难度自评太繁琐, 我每次都得想一遍? 而且它不就是用来选模型档位吗?**
-A: 两部分. (1) 它不再选模型档位了 — 那套 D0–D5 → 便宜模型的路由已被 [methodology Delta 1](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md) 废弃; 现在每个 sub-agent 都用顶配模型. (2) 自评依然值: 它决定 scope、required-reads 清单、以及独立审计该看得多狠. 头 5 次手动, 之后就成肌肉记忆. 跳过的代价通常是 ship 出 under- 或 over-scoped 的包 (F2-Scope family).
+A: 两部分. (1) 它不再选模型档位了 — 那套 D0–D5 → 便宜模型的路由已被 [methodology Delta 1](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md) 废弃; 现在每个 sub-agent 都用顶配模型. (2) 自评依然值: 它决定 scope、required-reads 清单、以及独立审计该看得多狠. 头 5 次手动, 之后就成肌肉记忆. 跳过的代价通常是 ship 出 under- 或 over-scoped 的包 (F2-Scope family).
 
 **Q: 为什么作者 agent 不能自己审自己的活? 多派一次审计成本翻倍.**
-A: 作者的 context 偏向"这事儿做完了"的结论 — 它会把审计本该抓的那个 drift 合理化掉. 你这个 framing 了活的人也一样. 一个*独立、只读、不同的* agent ([Delta 3](https://github.com/Cobrust-lang/agent-driven-development/blob/main/plugins/adsd/skills/agent-driven-development/reference/cobrust-f44-f70/methodology-deltas.md)) 是合并前抓到它最便宜的可靠办法. 把同形态的 surface batch 进一次审计派活就能压住次数; 而事后 (合并后) 审计严格更贵, 因为它得重读已合并的内容再跟原始意图 diff.
+A: 作者的 context 偏向"这事儿做完了"的结论 — 它会把审计本该抓的那个 drift 合理化掉. 你这个 framing 了活的人也一样. 一个*独立、只读、不同的* agent ([Delta 3](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md)) 是合并前抓到它最便宜的可靠办法. 把同形态的 surface batch 进一次审计派活就能压住次数; 而事后 (合并后) 审计严格更贵, 因为它得重读已合并的内容再跟原始意图 diff.
 
 **Q: 我用 OpenAI 不用 Anthropic?**
-A: ADSD 是 LLM-agnostic. 难度自评 / dev-test pair / evals-first / 独立审计 都 vendor-neutral. Claude Code plugin 部分只是发行渠道, 方法论本身不绑 Anthropic.
+A: Ballast 是 LLM-agnostic. 难度自评 / dev-test pair / evals-first / 独立审计 都 vendor-neutral. Claude Code plugin 部分只是发行渠道, 方法论本身不绑 Anthropic.
