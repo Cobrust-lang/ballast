@@ -8,7 +8,7 @@ adr_id: NNNN          # zero-padded, monotonic; check ls docs/agent/adr/
 title: "<5-10 word title>"
 status: proposed       # → accepted on merge → superseded if later replaced
 date: YYYY-MM-DD
-last_verified_commit: TBD  # stamp on merge, then update on revisits
+last_verified_commit: <40-char SHA>  # real ancestor of HEAD; TBD fails the gate. No id is exempt.
 supersedes: []
 superseded_by: []
 relates_to: []

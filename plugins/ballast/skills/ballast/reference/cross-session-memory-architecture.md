@@ -151,7 +151,7 @@ Single source of truth for current project state:
 - Phase / milestone progress
 - Binary verification claim (e.g. "cobrust build hello.cb passes at HEAD")
 
-Snapshot has its own enforcement: `scripts/snapshot-lint.sh` validates the invariants are met. Without snapshot-lint, snapshot drifts (F1.1 — declared invariant without enforcement).
+Snapshot has its own enforcement: `scripts/check_ballast_docs.py` validates the roster, ancestry, resolvable `last_verified_commit`, and evidence grades. Earlier notes named this `scripts/snapshot-lint.sh`; that file was never shipped. Without the script that does exist, the snapshot drifts (F1.1 — declared invariant without enforcement).
 
 ## Layer 3 vs Layer 4 boundary
 
@@ -196,7 +196,7 @@ OpenAI threads are persistent multi-session conversations. Ballast's analog: per
 
 ### Snapshot-lint enforcement loop
 
-Layer 2 snapshot.md has invariants (HEAD freshness, ADR roster completeness). `scripts/snapshot-lint.sh` runs these as Inv 1-4. Pre-commit hook fires snapshot-lint, blocking commits that violate invariants. This is the F1.1 closure mechanism.
+Layer 2 snapshot.md has invariants (base_head ancestry, ADR and finding roster completeness, resolvable last-verified SHAs, evidence grades). `scripts/check_ballast_docs.py` is the F1.1 closure for an adopting repo. This methodology repo runs that script's `--self-test` from `scripts/doc-coverage.sh`. Wire the script into the adopting project's CI; a pre-commit hook is optional and is not a substitute for CI.
 
 ### CTO operations runbook is the Layer 1 cookbook
 

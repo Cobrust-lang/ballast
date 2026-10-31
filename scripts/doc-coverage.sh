@@ -117,6 +117,17 @@ else
 fi
 
 # ----------------------------------------------------------------------------
+# Inv 4: adopting-project snapshot gate still fails when it should
+# ----------------------------------------------------------------------------
+echo ""
+echo "[Inv 4] Snapshot gate self-test"
+
+if ! python3 scripts/check_ballast_docs.py --self-test; then
+  echo -e "  ${RED}error${NC}: scripts/check_ballast_docs.py --self-test failed"
+  errors=$((errors + 1))
+fi
+
+# ----------------------------------------------------------------------------
 # Summary
 # ----------------------------------------------------------------------------
 echo ""

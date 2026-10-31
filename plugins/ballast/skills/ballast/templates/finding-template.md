@@ -6,7 +6,7 @@
 ---
 doc_kind: finding
 finding_id: <kebab-case-slug>
-last_verified_commit: <SHA at time of writing>
+last_verified_commit: <40-char SHA>  # ancestor of HEAD; TBD and shortened SHAs fail the gate
 discovered_by: <agent name + context, e.g. "review-claude (LeetCode farm Round 1, LC 263)">
 severity: P0 | P1 | P2 | P3
 related: [<other finding slugs>, <ADR refs>]

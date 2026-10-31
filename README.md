@@ -214,7 +214,7 @@ User-facing docs are in [`docs/human/`](./docs/human/) (zh + en parallel per Bal
 bash scripts/doc-coverage.sh
 ```
 
-The script also verifies reference files have YAML frontmatter and ADR files are zero-padded monotonic. This closes Ballast §3 mandate as F20 systemic prevention applied to Ballast itself.
+The script also verifies reference files have YAML frontmatter, ADR files are zero-padded monotonic, and `scripts/check_ballast_docs.py --self-test` passes. That self-test is the methodology repo's copy of the adopting-project snapshot gate (roster exactly once, `base_head` ancestry, resolvable `last_verified_commit`, evidence grades, chosen drift axis). An adopting project runs `python3 scripts/check_ballast_docs.py` on its own root. See [`reference/adopting-gates.md`](./plugins/ballast/skills/ballast/reference/adopting-gates.md).
 
 ## Origin
 

@@ -66,14 +66,14 @@ delete obsolete sections. Each turn adds a layer; sediment accumulates.
 2. Three-way reconcile: `git log -10` + `ls findings/` + `ls adr/`
    compared against snapshot's claims.
 3. Delete obsolete sections (don't preserve stale residue).
-4. Add `schema_invariant` frontmatter:
-   ```yaml
-   schema_invariant: |
-     Every ADR mentioned in any section must appear in §"ADR roster" table.
-     Binary verification list appears EXACTLY ONCE.
-   ```
-5. (Optional) Add CI lint: `scripts/snapshot-lint.sh` that fails
-   builds if invariant violated.
+4. Add `schema_invariant` frontmatter. The enforceable form is the one
+   in `reference/adopting-gates.md`: every ADR and finding file appears
+   exactly once, `base_head` is an ancestor of HEAD, and each
+   verification grade is `offline`, `review`, `deployed`, `live`, or
+   `not-run`. Do not require the snapshot SHA to equal `git log -1`.
+5. Run `scripts/check_ballast_docs.py` in CI. A declared invariant
+   without that script is F1.1. (`scripts/snapshot-lint.sh` was a name
+   in earlier drafts; it is not the script this repo ships.)
 
 ### Evidence
 
@@ -110,10 +110,15 @@ audit found:
 - Lifecycle mismatch: msgpack finding `status: open` despite being
   closed by `99ebc54`
 
-**Recovery**: invariants must compile to script assertions. Add
-`scripts/snapshot-lint.sh` that fails build if `git log -1 --format=%h`
-≠ snapshot's HEAD field, and similar checks for ADR/finding ledger
-completeness. Run in CI on every snapshot edit.
+**Recovery**: invariants must compile to script assertions. Run
+`scripts/check_ballast_docs.py` in CI. It checks roster bijection,
+`base_head` ancestry, a resolvable `last_verified_commit`, and evidence
+grades. It does **not** fail when the recorded SHA is merely older than
+`HEAD`: equality with `git log -1` is red on the commit that records an
+honest snapshot, which is why that check gets deleted. A stale-but-ancestor
+SHA is still stale prose. Make that visible with a `not-run` grade or a
+re-stamped `last_verified_commit`, not with an equality rule you cannot
+keep.
 
 ### F1.2 — Constitution rules with partial-scope enforcement
 

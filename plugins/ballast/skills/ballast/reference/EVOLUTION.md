@@ -1,9 +1,9 @@
 ---
 name: Ballast evolution / changelog
-description: The methodology's growth arc as a concise changelog — the doc a returning reader checks to see "what changed since I last read". One short paragraph per era (F1-F30 original 12-day distillation → F31-F40 → F41-F43 → F44-F72 + the 11 methodology deltas + dynamic-Workflow orchestration as the default dev mode + the Elegance Law + mutation-prove-a-tripwire + slice-to-smallest-gated-increment), each with its Cobrust empirical anchor and a pointer to the batch's reference dir/README. Not a re-derivation of the methodology — read SKILL.md for that; read this to orient on what is new.
+description: The methodology's growth arc as a concise changelog — the doc a returning reader checks to see "what changed since I last read". One short paragraph per era (F1-F30 original 12-day distillation → F31-F40 → F41-F43 → F44-F72 + the 11 methodology deltas + dynamic-Workflow orchestration as the default dev mode + the Elegance Law + mutation-prove-a-tripwire + slice-to-smallest-gated-increment), each with its Cobrust empirical anchor and a pointer to the batch's reference dir/README. Not a re-derivation of the methodology — read SKILL.md for that; read this to orient on what is new. The 2026-10-31 era adds the adopting-project snapshot gate (Deltas 12–15); the adopting project is not named here.
 type: reference
-version: 1.1.0
-date: 2026-05-30
+version: 1.2.0
+date: 2026-10-31
 status: active
 relates_to: [skill:SKILL.md §"Origin & lineage", reference:failure-modes-catalogue.md, reference:cobrust-f31-f39/README.md, reference:cobrust-f41-f43/README.md, reference:cobrust-f44-f70/README.md, reference:cobrust-f44-f70/methodology-deltas.md, docs:conventions.md]
 ---
@@ -279,16 +279,38 @@ persona", §"Deep-source-read (the 8th audit dimension)".
 
 ---
 
+## 2026-10-31 — The snapshot roster becomes a failing gate
+
+A later adopting project, not named in this repo, sent back four
+corrections. None of its systems are reproduced here. The snapshot no
+longer requires its recorded HEAD to equal `git log -1`; `base_head`
+must be an ancestor, and equality is not required. `last_verified_commit`
+must be a full SHA that is an ancestor, with no document id exempt.
+Verification claims carry a grade (`offline`, `review`, `deployed`,
+`live`, or `not-run`) and a grade does not promote. The project declares
+whether its drift axis is bilingual or an audience split, and a
+correction banner is not allowed to leave the contradicted paragraph in
+place.
+
+The gate is `scripts/check_ballast_docs.py`. This repo runs its
+`--self-test`. Adopting repos run it on themselves.
+
+*Depth:* `reference/adopting-gates.md` (Deltas 12–15).
+
+---
+
 ## Reading order for a returning agent
 
 1. **This file** — orient on what's new since you last read.
 2. **`SKILL.md`** — the current methodology (origin stats there are a *floor*).
 3. The **batch dir** for the era you care about (`cobrust-f31-f39/`,
    `cobrust-f41-f43/`, `cobrust-f44-f70/`) — start with its `README.md`.
-4. **`cobrust-f44-f70/methodology-deltas.md`** — the 9 process refinements, if you
-   run multi-agent dispatch yourself; pair with
+4. **`cobrust-f44-f70/methodology-deltas.md`** — the Cobrust dispatch/audit
+   refinements, if you run multi-agent dispatch yourself; pair with
    **`workflow-orchestration-patterns.md`** (the six dynamic-Workflow patterns) once
-   that mode is your default.
+   that mode is your default. For the snapshot gate, read
+   **`adopting-gates.md`** (Deltas 12–15) instead of looking for another
+   Cobrust batch.
 5. **`docs/agent/conventions.md`** — how this repo dogfoods its own discipline
    (several deltas became pre-commit conventions there).
 
