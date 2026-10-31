@@ -1,10 +1,10 @@
-# ADSD concept map
+# Ballast concept map
 
-> Mermaid diagrams + short prose to unpack the full ADSD concept landscape at once.
+> Mermaid diagrams + short prose to unpack the full Ballast concept landscape at once.
 >
 > This is the "how the pieces fit" doc. It's battle-tested, not orthodoxy —
-> bend it when your project shape demands (see SKILL.md §"When to bend ADSD").
-> Every quantitative claim here cites a real on-disk source; ADSD dogfoods its
+> bend it when your project shape demands (see SKILL.md §"When to bend Ballast").
+> Every quantitative claim here cites a real on-disk source; Ballast dogfoods its
 > own §4 benchmark-cite discipline on its own docs.
 
 ## Top-level view
@@ -37,7 +37,7 @@ flowchart TB
     Fix --> ReleaseReady
 ```
 
-Two structural shifts from early ADSD are baked into this diagram and explained
+Two structural shifts from early Ballast are baked into this diagram and explained
 below: **every author dispatch pairs with an independent audit before merge**
 (methodology Delta 3), and **every sub-agent — author and audit — runs on the
 top model tier** (Delta 1, which retired the old "sonnet for mechanical tasks"
@@ -46,7 +46,7 @@ branch). The 8 methodology deltas live in
 
 ## Role topology (5 tiers + external review)
 
-ADSD maps work onto a **5-tier role hierarchy plus an external review track**.
+Ballast maps work onto a **5-tier role hierarchy plus an external review track**.
 Tiers map to model size + autonomy budget, not to humans. One CTO per project
 (a deliberate bottleneck); review is plural-OK.
 
@@ -247,7 +247,7 @@ flowchart LR
 - **Tactical layer**: ADR + Finding added weekly; milestone checkpoints; audit-team design.
 - **Execution layer**: daily sprints, author + independent-audit dispatch, gate enforcement, atomic commits.
 
-## Methodology deltas — how ADSD refines *itself*
+## Methodology deltas — how Ballast refines *itself*
 
 Findings say "the system did X wrong". **Methodology deltas** say "the way we *run*
 the multi-agent process should change". Eight deltas accumulated during Cobrust's

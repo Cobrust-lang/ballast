@@ -1,21 +1,21 @@
 {
-  "name": "adsd",
+  "name": "ballast",
   "owner": {
     "name": "Cobrust-lang",
     "url": "https://github.com/Cobrust-lang"
   },
   "metadata": {
-    "description": "Single-plugin marketplace hosting the Agent-Driven Software Development (ADSD) methodology skill.",
-    "version": "1.1.0"
+    "description": "Single-plugin marketplace hosting the Ballast (压舱石) methodology skill. Formerly ADSD.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "adsd",
-      "source": "./plugins/adsd",
-      "description": "ADSD methodology — battle-tested patterns for multi-agent software projects (4-tier role topology, two-phase dispatch SOP, 8-dimension audit, F1-F18 failure catalogue, templates).",
-      "version": "1.1.0",
+      "name": "ballast",
+      "source": "./plugins/ballast",
+      "description": "Ballast (压舱石) — working discipline for multi-agent software projects where agents write most of the code. Formerly ADSD. Not a framework.",
+      "version": "2.0.0",
       "category": "skills",
-      "keywords": ["methodology", "multi-agent", "adsd", "ai-driven-development"]
+      "keywords": ["methodology", "multi-agent", "ballast", "ai-driven-development"]
     }
   ]
 }
