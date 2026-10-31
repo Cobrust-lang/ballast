@@ -1,6 +1,6 @@
 ---
 name: ballast
-description: Ballast (压舱石) is the working discipline for multi-agent software projects where AI agents produce ≥70% of code. Formerly called ADSD. Righting mass against sediment, not a framework and not the name of the category. Use when starting such a project, planning P10/P9/P8/P7 sub-agent dispatch, running tactical or strategic project reviews, drafting ADR/finding/snapshot artifacts, designing pre-release multi-agent audit teams, or diagnosing multi-agent failure modes (snapshot sediment, post-compaction role-identity drift, silent miscompile, marketing overreach without benchmark cite, sub-agent KPI self-report fidelity gaps, attribution-policy scope leaks). Provides 5-tier role topology (P10 CTO / P9 tech lead / P8 domain expert / P7 senior eng / P0 atomic + external review), two-phase dispatch SOP (Phase 1 ADR spike → Phase 2 P9 impl), dynamic-Workflow deterministic orchestration as the default dev mode for stable-shape work (fan-out → synthesis → impl → audit; six reusable patterns incl. robust() retry-wrap in reference/workflow-orchestration-patterns.md), snapshot-first documentation discipline, staged mocked-to-live progression guidance, 8-dimension audit pattern (4 internal + 3 persona + deep-source-read), the Elegance Law (ecosystem/backend .cb surfaces are a clean footgun-dropping re-design, not a mechanical clone), F1–F72 failure-modes catalogue (original F1-F30 + Cobrust corroboration batches F31-F40 / F41-F43 / F44-F72 + 11 methodology deltas), AI velocity planning heuristic, and ADR/finding/snapshot/dispatch-prompt-{p7,p9}/handoff-cover-letter templates under templates/. Read SKILL.md first; pull reference/failure-modes-catalogue.md, the per-batch reference/cobrust-f31-f39 / -f41-f43 / -f44-f70 corroboration sets (incl. methodology-deltas.md + workflow-orchestration-patterns.md), and case-study/cobrust-multi-agent-experience.md on demand.
+description: Ballast (压舱石) is the working discipline for multi-agent software projects where AI agents produce ≥70% of code. Formerly called ADSD. Righting mass against sediment, not a framework and not the name of the category. Use when starting such a project, planning P10/P9/P8/P7 sub-agent dispatch, running tactical or strategic project reviews, drafting ADR/finding/snapshot artifacts, running the adopting-project snapshot gate, designing pre-release multi-agent audit teams, or diagnosing multi-agent failure modes (snapshot sediment, post-compaction role-identity drift, silent miscompile, marketing overreach without benchmark cite, sub-agent KPI self-report fidelity gaps, attribution-policy scope leaks). Provides 5-tier role topology (P10 CTO / P9 tech lead / P8 domain expert / P7 senior eng / P0 atomic + external review), two-phase dispatch SOP (Phase 1 ADR spike → Phase 2 P9 impl), dynamic-Workflow deterministic orchestration as the default dev mode for stable-shape work (fan-out → synthesis → impl → audit; six reusable patterns incl. robust() retry-wrap in reference/workflow-orchestration-patterns.md), snapshot-first documentation discipline, staged mocked-to-live progression guidance, 8-dimension audit pattern (4 internal + 3 persona + deep-source-read), the Elegance Law (ecosystem/backend .cb surfaces are a clean footgun-dropping re-design, not a mechanical clone), F1–F72 failure-modes catalogue (original F1-F30 + Cobrust corroboration batches F31-F40 / F41-F43 / F44-F72 + 11 methodology deltas), AI velocity planning heuristic, and ADR/finding/snapshot/dispatch-prompt-{p7,p9}/handoff-cover-letter templates under templates/. Read SKILL.md first; pull reference/failure-modes-catalogue.md, the per-batch reference/cobrust-f31-f39 / -f41-f43 / -f44-f70 corroboration sets (incl. methodology-deltas.md + workflow-orchestration-patterns.md), and case-study/cobrust-multi-agent-experience.md on demand.
 ---
 
 # Ballast
@@ -751,14 +751,23 @@ When they disagree, snapshot wins until the projections are synchronized.
 Schema invariants (use frontmatter to enforce):
 ```yaml
 schema_invariant: |
-  Every ADR mentioned in any section must appear in §"ADR roster" table.
-  Every finding mentioned in any section must appear in §"Findings ledger".
-  Binary verification list appears EXACTLY ONCE under §"main branch state".
-  HEAD field reconciles with `git log -1 --format=%H`.
+  Every ADR file appears exactly once in §"ADR roster", and every roster id has a file.
+  Every finding file appears exactly once in §"Findings ledger", and every ledger id has a file.
+  §"Verification summary" appears exactly once. Each Grade is
+  offline, review, deployed, live, or not-run.
+  base_head is an ancestor of HEAD. Do not require equality with HEAD.
+  last_verified_commit is a 40-character ancestor SHA. No document id is exempt.
 ```
 
 These invariants prevent the most common failure mode: "重写新段、忘删旧段"
-(write new section, forget to delete old).
+(write new section, forget to delete old). Equality with `git log -1` is
+not one of them. That equality becomes false in the commit that records
+the snapshot, and a gate which requires it gets abandoned. Ancestry
+survives that commit.
+
+The check is a script, `scripts/check_ballast_docs.py`, not this paragraph.
+See `reference/adopting-gates.md`. A checklist in the template does not
+close F1.
 
 ### Snapshot-first close-out
 
@@ -772,25 +781,43 @@ This turns documentation truthfulness into a deliverable rather than a
 best-effort cleanup task. A repo whose README is more current than its
 snapshot is upside down.
 
-### Triple-tree doc (optional)
+### Choose the drift axis
 
-For projects with multi-language audiences:
-- `docs/human/zh/` — for human readers (Chinese)
-- `docs/human/en/` — for human readers (English)
-- `docs/agent/` — for AI agents (dense, schemas, no narrative)
+Bilingual text is one split. An audience split is another: a human
+procedure and an agent state machine, same filename, cross-linked.
+Declare `drift_axis: bilingual` or `drift_axis: audience` on the
+snapshot, and gate the split where the two readers can disagree.
 
-Code change → all three trees update in **same commit**. CI enforces
-via `doc-coverage.sh`.
+For a bilingual project the trees are:
 
-If single-language project, drop to `docs/human/` + `docs/agent/`.
+- `docs/human/zh/` — human readers (Chinese)
+- `docs/human/en/` — human readers (English)
+- `docs/agent/` — agents (dense, schemas, no narrative)
+
+A code change updates the trees it affects in the **same commit**. This
+repo enforces its own zh/en pair with `scripts/doc-coverage.sh`. That
+pair is not a requirement to invent a translation nobody reads.
+
+For an audience split, set `audience_human_dir` and `audience_agent_dir`.
+The snapshot gate requires those directories to contain the same
+markdown names.
+
+A banner that contradicts the paragraph under it is not a correction.
+Rewrite or delete the paragraph in the same commit. The banner becomes
+a second document, and the next agent follows the older one.
 
 ### "Last verified commit" stamping
 
-Every doc with persistent claims has `last_verified_commit: <SHA>`
-frontmatter. When the SHA drifts > N commits behind HEAD, the doc is
-"stale" and must be re-verified. CI can flag this.
+Every ADR, finding, and snapshot carries `last_verified_commit: <40-character SHA>`.
+The SHA must be an ancestor of `HEAD`. `TBD`, an empty value, and a
+shortened SHA fail. No document id is exempt: grandfathering the
+founding ADR is how the load-bearing decision escapes. Field presence
+is not verification.
 
-This is how you avoid the "snapshot says X, reality is Y" sediment.
+`scripts/check_ballast_docs.py` enforces this on an adopting repo. This
+methodology repo runs the script's `--self-test` from
+`scripts/doc-coverage.sh`, because the methodology repo is not itself a
+project snapshot.
 
 ---
 
@@ -1156,9 +1183,12 @@ The non-negotiable core:
 2. Honest fail acceptance (negative results published)
 3. CLI fail-fast (no silent miscompile)
 4. ADR for any cross-file decision
-5. Schema-invariant frontmatter on stateful docs
+5. Schema-invariant frontmatter on stateful docs, enforced by
+   `scripts/check_ballast_docs.py` (ancestry, exactly-once roster,
+   resolvable `last_verified_commit`, evidence grades that do not promote)
 
-Everything else is adaptable.
+Everything else is adaptable, including which drift axis you gate. A
+single-language project does not owe this repo a translation.
 
 ---
 
@@ -1234,7 +1264,7 @@ Specific Cobrust artifacts that inspired each Part:
 - Part 1 Topology: `findings/multi-agent-cobrust-topology.md`
 - Part 2 Two-phase dispatch: `feedback_p9_two_phase_dispatch` memory
 - Part 2.5 Dynamic-Workflow orchestration: `reference/cobrust-f44-f70/methodology-deltas.md` (Delta 8, v0.7.0 back-port run + 2026-05-29/30 default-mode close) + `reference/workflow-orchestration-patterns.md` (the six reusable patterns)
-- Part 3 Snapshot discipline: 8th + 9th close-out reviews
+- Part 3 Snapshot discipline: 8th + 9th close-out reviews, plus the adopting-project gate in `reference/adopting-gates.md` (Deltas 12–15: ancestry not equality, resolvable `last_verified_commit`, evidence grades, chosen drift axis). The adopting project is not named in this repo.
 - Part 4 Stress-test farms: Conway-cobrust-toy + Cobrust-leetcode-farm
 - Part 5 Wedge: 10th strategic review (`reviews/2026-05-10-...md`)
 - Part 6 Failure catalogue: aggregated from 6+ findings; corroborated + extended

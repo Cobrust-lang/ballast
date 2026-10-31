@@ -248,7 +248,7 @@ If Claude auto-references Ballast's `reference/` files, you installed correctly.
 A: Only for decisions affecting ≥2 files. Single-file modifications don't write ADRs. Bug fixes don't write ADRs (but do write findings).
 
 **Q: Bilingual docs feel burdensome?**
-A: Ballast mandates this because it addresses the real "Chinese teams are natively multilingual" problem. Single-language projects can relax this; but the README + getting-started bilingual pair is recommended.
+A: Choose the drift axis. If readers split by language, keep the zh and en pair. If they split by role — a person following a procedure, an agent following state — pair those two files by name and gate the pair. Do not add a translation nobody reads, and do not leave a disclaimer above a paragraph you should have rewritten. The snapshot gate is [`scripts/check_ballast_docs.py`](https://github.com/Cobrust-lang/ballast/blob/main/scripts/check_ballast_docs.py); the four rules are in [`reference/adopting-gates.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/adopting-gates.md).
 
 **Q: The difficulty self-rating feels tedious — do I need it every time, and doesn't it just pick a model tier?**
 A: Two parts. (1) It no longer picks a model tier — that D0–D5 → cheap-model routing was retired by [methodology Delta 1](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md); every sub-agent now uses the top model. (2) The rating still earns its keep: it shapes scope, the required-reads list, and how hard the independent audit should look. Manual the first 5 times, then muscle memory. Skipping it tends to ship under- or over-scoped packages (the F2-Scope family).

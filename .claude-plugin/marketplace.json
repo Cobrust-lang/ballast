@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Single-plugin marketplace hosting the Ballast (压舱石) methodology skill. Formerly ADSD.",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "plugins": [
     {
       "name": "ballast",
       "source": "./plugins/ballast",
       "description": "Ballast (压舱石) — working discipline for multi-agent software projects where agents write most of the code. Formerly ADSD. Not a framework.",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "category": "skills",
       "keywords": ["methodology", "multi-agent", "ballast", "ai-driven-development"]
     }

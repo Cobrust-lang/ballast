@@ -1,7 +1,7 @@
 {
   "name": "ballast",
   "description": "Ballast (压舱石) is the working discipline for multi-agent software projects where AI agents produce most of the code. Formerly ADSD. Righting mass against sediment: role topology, two-phase dispatch, 8-dimension audit, failure-mode catalogue, and ADR/finding/snapshot templates. Not a framework.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Cobrust-lang",
     "url": "https://github.com/Cobrust-lang"

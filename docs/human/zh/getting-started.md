@@ -226,7 +226,7 @@ Workflow** (一段 Claude Code 编排脚本), 把 **fan-out → synthesis → im
 A: 跨 ≥2 文件的决定才写. 单文件修改不写. 修 bug 不写 (但写 finding).
 
 **Q: zh + en 双语文档负担太重?**
-A: Ballast 强制是因为它解决了"中国团队天然 multi-lingual"的真实问题. 单语项目可以放宽, 但 README + getting-started 双语建议保持.
+A: 自己选防漂移的那一侧. 读者按语言分开, 就保持中英成对. 读者按角色分开 — 人按步骤做, Agent 按状态机做 — 就把这两份文档按同名配好并门禁. 不要为了模板去翻译一份没人读的文本, 也不要在该改写的段落上面叠一条免责声明. 快照门禁是 [`scripts/check_ballast_docs.py`](https://github.com/Cobrust-lang/ballast/blob/main/scripts/check_ballast_docs.py); 四条规则在 [`reference/adopting-gates.md`](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/adopting-gates.md).
 
 **Q: 难度自评太繁琐, 我每次都得想一遍? 而且它不就是用来选模型档位吗?**
 A: 两部分. (1) 它不再选模型档位了 — 那套 D0–D5 → 便宜模型的路由已被 [methodology Delta 1](https://github.com/Cobrust-lang/ballast/blob/main/plugins/ballast/skills/ballast/reference/cobrust-f44-f70/methodology-deltas.md) 废弃; 现在每个 sub-agent 都用顶配模型. (2) 自评依然值: 它决定 scope、required-reads 清单、以及独立审计该看得多狠. 头 5 次手动, 之后就成肌肉记忆. 跳过的代价通常是 ship 出 under- 或 over-scoped 的包 (F2-Scope family).

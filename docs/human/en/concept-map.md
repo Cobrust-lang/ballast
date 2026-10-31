@@ -173,7 +173,7 @@ flowchart LR
     ADR -. cross-ref by stable ID .-> Finding
     Finding -. promotes to .-> Catalogue["Failure-modes catalogue<br/>F1–F70"]
 
-    Snapshot --> Invariant["schema_invariant frontmatter<br/>every ADR mentioned ⇒ in roster table<br/>HEAD reconciles with git log -1"]
+    Snapshot --> Invariant["schema_invariant frontmatter<br/>every ADR file ⇒ exactly once in the roster<br/>base_head is an ancestor of HEAD"]
 ```
 
 - **ADR** — a *decision*. Options (≥ 3) + chosen + consequences. Stable
@@ -190,7 +190,9 @@ flowchart LR
 The `schema_invariant` frontmatter is what stops the most common failure (F1.0
 "重写忘删" — write new section, forget to delete the old one). But a declared
 invariant is documentation, not enforcement: F1.1 says it must compile to a script
-assertion (`scripts/snapshot-lint.sh`) run in CI, or it goes stale within 1–3 turns.
+assertion (`scripts/check_ballast_docs.py`) run in CI, or it goes stale within 1–3 turns.
+Earlier drafts named that script `snapshot-lint.sh`; the script that ships is
+`check_ballast_docs.py`. It checks ancestry, not equality with `git log -1`.
 
 ## The failure-modes catalogue — F1–F70
 

@@ -48,7 +48,8 @@ ballast/
 │       ├── adr/                            # Meta-ADRs for Ballast itself (reserved; schema below)
 │       └── findings/                       # Findings about Ballast's evolution (reserved; schema below)
 ├── scripts/
-│   └── doc-coverage.sh                     # Enforces zh+en parity per Ballast §3 mandate
+│   ├── doc-coverage.sh                     # This repo's zh+en parity, plus the snapshot-gate self-test
+│   └── check_ballast_docs.py               # Adopting-project snapshot gate (roster, ancestry, grades)
 ├── CONTRIBUTING.md                         # Human-facing contribution guide
 ├── LICENSE-APACHE / LICENSE-MIT
 └── README.md                               # Entry point
@@ -60,6 +61,7 @@ ballast/
 2. Every reference under `plugins/ballast/skills/ballast/reference/` MUST have YAML frontmatter (`name`, `description`, `type`, `version`, `date`, `status`, `relates_to`).
 3. The SKILL.md `description` field is the auto-activation trigger — keep it keyword-dense and specific.
 4. ADRs in `docs/agent/adr/` are zero-padded sequential (`0001-*.md`, `0002-*.md`, ...). Once accepted, an ADR is immutable; supersede via a new ADR.
+5. Adopting projects run `scripts/check_ballast_docs.py` against their own root. This methodology repo is not a project snapshot; `scripts/doc-coverage.sh` runs the script's `--self-test` instead. The four rules (ancestry, resolvable `last_verified_commit`, evidence grades, chosen drift axis) live in `plugins/ballast/skills/ballast/reference/adopting-gates.md`.
 
 ## Frontmatter contracts
 

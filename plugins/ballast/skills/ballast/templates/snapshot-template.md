@@ -8,12 +8,20 @@ name: <project> state snapshot (compaction-resilient)
 description: Authoritative compressed state of <project> at <date>. Update at end-of-CTO-turn so context compaction never loses load-bearing facts.
 type: project
 
+doc_kind: snapshot
+base_head: <40-char SHA that is an ancestor of HEAD>
+last_verified_commit: <40-char SHA that is an ancestor of HEAD>
+drift_axis: bilingual | audience
+# audience mode also requires:
+# audience_human_dir: docs/human-procedure
+# audience_agent_dir: docs/agent/procedure
+
 schema_invariant: |
-  Every ADR mentioned in any section must appear in §"ADR roster" table.
-  Every finding mentioned in any section must appear in §"Findings ledger".
-  Binary verification list appears EXACTLY ONCE under §"main branch state".
-  HEAD field reconciles with `git log -1 --format=%H` at write-time.
-  cumulative_tests must include verification SHA + arch.
+  Every ADR file appears exactly once in §"ADR roster", and every roster id has a file.
+  Every finding file appears exactly once in §"Findings ledger", and every ledger id has a file.
+  §"Verification summary" appears exactly once. Each Grade is offline, review, deployed, live, or not-run.
+  base_head is an ancestor of HEAD. Equality is allowed and is not required.
+  last_verified_commit resolves to an ancestor SHA. No document id is exempt.
 ---
 
 ## Project root + constitution
@@ -24,7 +32,8 @@ schema_invariant: |
 
 ## main branch state
 
-- **HEAD**: `<SHA>` — `<commit message tag>`
+- **Base HEAD**: `<SHA>` — ancestor of the commit that records this snapshot. Do not require this field to equal `HEAD` after that commit lands.
+- **HEAD when written**: `<SHA>` — `<commit message tag>`. Informational. The gate checks ancestry, not equality.
 - **Cumulative commits**: ~N
 - **Cumulative tests**: <X> passed / <Y> failed / <Z> ignored — CTO verified @ HEAD `<SHA>` on <arch>. <Other-arch> validation: <status>.
 - **5-gate baseline**: fmt 0 / clippy 0 / build 0 / test 0 / doc-coverage 0  (verified at <SHA>)
@@ -45,11 +54,11 @@ schema_invariant: |
 
 | ADR | Title | Phase | Last verified |
 |---|---|---|---|
-| 0001 | <title> | <phase> | <SHA or —> |
-| 0002 | ... | ... | ... |
+| 0001 | <title> | <phase> | <SHA> |
 
-(Every ADR in `docs/agent/adr/` MUST have a row here. Schema invariant
-enforces this.)
+(Every ADR file in `docs/adr/` or `docs/agent/adr/` has exactly one row here,
+and every row has a file. `scripts/check_ballast_docs.py` enforces this.
+Delete the example row if that ADR does not exist.)
 
 ## Findings ledger
 
@@ -58,7 +67,7 @@ enforces this.)
 | <slug-1> | <one-line description> | closed |
 | <slug-2> | <one-line description> | open |
 
-(Every file in `docs/agent/findings/` MUST have a row here.)
+(Every file in `docs/agent/findings/` has exactly one row here, and every row has a file. Delete the example rows.)
 
 ## Crate inventory (or module inventory for non-Rust projects)
 
@@ -96,6 +105,14 @@ Out-of-scope items deferred to next phase. Each must have:
 
 If you can't fill these 3 fields, the item is fantasy not plan.
 
+## Verification summary
+
+| Claim | Grade | Evidence |
+|---|---|---|
+| <what this wave actually showed> | offline \| review \| deployed \| live \| not-run | <where the evidence is> |
+
+`not-run` is a grade. Do not leave the row out, and do not copy a previous wave's grade forward. A passing stand-in is `offline` or `review`, not `live`.
+
 ## How to resume next session
 
 1. Read `MEMORY.md` (or equivalent index)
@@ -113,10 +130,12 @@ a snapshot claim.
 
 ## Anti-sediment checklist (run when updating snapshot)
 
-- [ ] HEAD field matches `git log -1 --format=%H` (not from memory)
-- [ ] Cumulative tests reflect actual `cargo test --workspace` output, not P9-reported
-- [ ] ADR roster table has rows for ALL files in `docs/agent/adr/*.md`
-- [ ] Findings ledger has rows for ALL files in `docs/agent/findings/*.md`
-- [ ] Binary verification list is **a single section** (no duplicate stale copies)
+- [ ] `python3 scripts/check_ballast_docs.py` passes. A ticked box is not the gate.
+- [ ] `base_head` is an ancestor of `HEAD` (recorded from git, not memory). Equality was not required.
+- [ ] `last_verified_commit` on this file, every ADR, and every finding is a full SHA and an ancestor. No `TBD`. No id exemption.
+- [ ] ADR roster and findings ledger are bijections with the files. Each id appears once.
+- [ ] Verification summary is a single section, and every grade is `offline`, `review`, `deployed`, `live`, or `not-run`.
+- [ ] No correction banner left above a paragraph it contradicts. Rewrite or delete the paragraph.
+- [ ] `drift_axis` is declared. Audience mode pairs the two directories by filename.
 - [ ] No "in-flight at this turn" residue from prior turns
-- [ ] Phase F backlog items each have trigger + done-means + effort
+- [ ] Deferred items each have trigger + done-means + effort

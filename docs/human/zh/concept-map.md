@@ -164,7 +164,7 @@ flowchart LR
     ADR -. 用稳定 ID 交叉引用 .-> Finding
     Finding -. 晋升为 .-> Catalogue["失败模式 catalogue<br/>F1–F70"]
 
-    Snapshot --> Invariant["schema_invariant frontmatter<br/>每个提到的 ADR ⇒ 在 roster 表里<br/>HEAD 与 git log -1 对账"]
+    Snapshot --> Invariant["schema_invariant frontmatter<br/>每份 ADR 文件 ⇒ roster 里恰好一次<br/>base_head 是 HEAD 的祖先"]
 ```
 
 - **ADR** — 一个*决策*. 选项 (≥ 3) + 选中 + 后果. 稳定的 `adr_id` +
@@ -178,7 +178,9 @@ flowchart LR
 
 `schema_invariant` frontmatter 正是阻止最常见失败 (F1.0 "重写忘删" — 写新段忘删旧段)
 的东西. 但一个声明的 invariant 是文档, 不是 enforcement: F1.1 说它必须编译成脚本断言
-(`scripts/snapshot-lint.sh`) 在 CI 里跑, 否则 1–3 轮内就 stale.
+(`scripts/check_ballast_docs.py`) 在 CI 里跑, 否则 1–3 轮内就 stale.
+早先的草稿把这个脚本叫作 `snapshot-lint.sh`; 真正随仓库发布的是
+`check_ballast_docs.py`. 它检查的是祖先关系, 不是和 `git log -1` 相等.
 
 ## 失败模式 catalogue — F1–F70
 
